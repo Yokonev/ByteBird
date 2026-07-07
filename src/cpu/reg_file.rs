@@ -9,7 +9,6 @@ pub enum DmgSimpleRegisters{
     B = 2, C = 3,
     D = 4, E = 5,
     H = 6, L = 7,
-    SP = 8, PC = 9
 }
 
 #[derive(Clone, Copy)]
@@ -29,14 +28,18 @@ pub enum DmgFlags{
 }
 
 pub struct RegFile{
-    registers: Vec<u8>
+    registers: Vec<u8>,
+    sp: u16,
+    pc: u16
 }
 
 impl RegFile {
 
     pub fn new() -> RegFile{
         RegFile { 
-            registers: vec![0u8; REG_COUNT]
+            registers: vec![0u8; REG_COUNT],
+            sp: 0x0000,
+            pc: 0x0000
          }
     }
 
