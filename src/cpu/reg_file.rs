@@ -4,7 +4,7 @@ const REG_COUNT: usize = 10;
 const FLAG_REG_STRIDE: usize = 3; //bits 0..3 are ignored for flags
 
 #[derive(Clone, Copy)]
-enum DmgSimpleRegisters{
+pub enum DmgSimpleRegisters{
     A = 0, F = 1,
     B = 2, C = 3,
     D = 4, E = 5,
@@ -13,7 +13,7 @@ enum DmgSimpleRegisters{
 }
 
 #[derive(Clone, Copy)]
-enum DmgDoubleRegisters{
+pub enum DmgDoubleRegisters{
     AF = 0,
     BC = 1,
     DE = 2,
@@ -21,34 +21,34 @@ enum DmgDoubleRegisters{
 }
 
 #[derive(Clone, Copy)]
-enum DmgFlags{
+pub enum DmgFlags{
     ZERO = 4,
     SUBTRACT = 3,
     HCARRY = 2,
     CARRY = 1
 }
 
-struct RegFile{
+pub struct RegFile{
     registers: Vec<u8>
 }
 
 impl RegFile {
 
-    fn new() -> RegFile{
+    pub fn new() -> RegFile{
         RegFile { 
             registers: vec![0u8; REG_COUNT]
          }
     }
 
-    fn write_register(& mut self, target: DmgSimpleRegisters, value: u8) -> () {
+    pub fn write_register(& mut self, target: DmgSimpleRegisters, value: u8) -> () {
         self.registers[target as usize] = value;
     }
 
-    fn read_register(&self, target: DmgSimpleRegisters) -> u8 {
+    pub fn read_register(&self, target: DmgSimpleRegisters) -> u8 {
         self.registers[target as usize]
     }
 
-    fn write_double_register(& mut self, target: DmgDoubleRegisters, value: u16) -> () {
+    pub fn write_double_register(& mut self, target: DmgDoubleRegisters, value: u16) -> () {
         let upper: u8 = (value >> 8) as u8;
         let lower: u8 = (value & 0x00FF) as u8;
         let base_index: usize = (target as usize) * 2;
@@ -56,7 +56,7 @@ impl RegFile {
         self.registers[base_index + 1] = upper;
     }
 
-    fn read_double_register(&self, target: DmgDoubleRegisters) -> u16 {
+    pub fn read_double_register(&self, target: DmgDoubleRegisters) -> u16 {
         let base_index: usize = (target as usize) * 2;
         let upper: u8 = self.registers[base_index + 1];
         let lower: u8 = self.registers[base_index];
@@ -64,11 +64,11 @@ impl RegFile {
     }
 
     // Reminder, the F register reads as follows: 0xZNHC0000
-    fn read_flag(&self, target: DmgFlags) -> bool {
+    pub fn read_flag(&self, target: DmgFlags) -> bool {
         (self.registers[DmgSimpleRegisters::F as usize] & (1 << (FLAG_REG_STRIDE + target as usize))) != 0
     }
 
-    fn write_flag(& mut self, target: DmgFlags, value: bool) -> () {
+    pub fn write_flag(& mut self, target: DmgFlags, value: bool) -> () {
         let mask = 1u8 << (FLAG_REG_STRIDE + target as usize);
 
         match value {
