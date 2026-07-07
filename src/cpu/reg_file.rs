@@ -79,6 +79,23 @@ impl RegFile {
             false => (self.registers[DmgSimpleRegisters::F as usize]) &= !mask
         };
     }
+
+    pub fn read_sp(& self) -> u16 {
+        self.sp
+    }
+
+    pub fn write_sp(& mut self, value: u16) -> () {
+        self.sp = value;
+    }
+    
+    pub fn read_pc(& self) -> u16 {
+        self.pc
+    }
+
+    pub fn write_pc(& mut self, value: u16) -> () {
+        self.pc = value;
+    }
+
 }
 
 #[cfg(test)]
