@@ -1,7 +1,7 @@
-use crate::cpu::cpu::{self, *};
+use crate::cpu::regfile::{self, *};
 
 //DAA
-pub fn op_daa(reg_file: &mut Cpu) -> () {
+pub fn op_daa(reg_file: &mut Regfile) -> () {
     //TODO
 }
 
@@ -11,6 +11,6 @@ pub fn op_nop() -> () {
 }
 
 //STOP
-pub fn op_stop(reg_file: &mut Cpu) -> () {
+pub fn op_stop(reg_file: &mut Regfile) -> () {
     //TODO
 }

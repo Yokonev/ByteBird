@@ -1,3 +1,4 @@
+pub mod regfile;
+pub mod decoder;
 pub mod cpu;
-pub mod dispatcher;
 mod instructions;
