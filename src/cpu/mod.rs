@@ -1,3 +1,3 @@
-pub mod reg_file;
-pub mod dispatch_table;
+pub mod cpu;
+pub mod dispatcher;
 mod instructions;
