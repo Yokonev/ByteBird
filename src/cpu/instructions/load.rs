@@ -6,13 +6,13 @@ pub fn op_load_r8_r8(reg_file:&mut Regfile, destination:DmgSimpleRegisters, sour
 }
 
 //LD r8, n8
-pub fn op_load_r8_n8(reg_file:&mut Regfile, destination:DmgSimpleRegisters, source:u8) -> () {
-    //TODO
+pub fn op_load_r8_n8(reg_file:&mut Regfile, destination:DmgSimpleRegisters, source:u8) -> u8 {
+    8u8
 }
 
 //LD r16, n16
-pub fn op_load_r16_n16(reg_file:&mut Regfile, destination:DmgDoubleRegisters, source:u16) -> () {
-    //TODO
+pub fn op_load_r16_n16(reg_file:&mut Regfile, destination:DmgDoubleRegisters, source:u16) -> u8 {
+    12u8
 }
 
 //LD [HL], r8
@@ -31,8 +31,8 @@ pub fn op_load_r8_hl(reg_file:&mut Regfile, destination:DmgSimpleRegisters) -> (
 }
 
 //LD [r16], A
-pub fn op_load_r16_acc(reg_file:&mut Regfile, destination:DmgDoubleRegisters) -> () {
-    //TODO NEED MEMORY
+pub fn op_load_r16_acc(reg_file:&mut Regfile, destination:DmgDoubleRegisters) -> u8 {
+    8u8
 }
 
 //LD [n16], A

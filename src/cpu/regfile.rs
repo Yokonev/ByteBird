@@ -51,18 +51,20 @@ impl Regfile {
         self.registers[target as usize]
     }
 
+    //Note, if endianess is wrong, fix this by inverting upper and lower
     pub fn write_double_register(& mut self, target: DmgDoubleRegisters, value: u16) -> () {
         let upper: u8 = (value >> 8) as u8;
         let lower: u8 = (value & 0x00FF) as u8;
         let base_index: usize = (target as usize) * 2;
-        self.registers[base_index] = lower;
-        self.registers[base_index + 1] = upper;
+        self.registers[base_index] = upper;
+        self.registers[base_index + 1] = lower;
     }
 
+    //Note, if endianess is wrong, fix this by inverting upper and lower
     pub fn read_double_register(&self, target: DmgDoubleRegisters) -> u16 {
         let base_index: usize = (target as usize) * 2;
-        let upper: u8 = self.registers[base_index + 1];
-        let lower: u8 = self.registers[base_index];
+        let upper: u8 = self.registers[base_index];
+        let lower: u8 = self.registers[base_index + 1];
         ((upper as u16) << 8) | (lower as u16)
     }
 

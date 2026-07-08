@@ -1,3 +1,4 @@
+#![allow(warnings)]
 mod cpu;
 mod mem;
 mod emulator;

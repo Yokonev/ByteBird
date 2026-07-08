@@ -1,3 +1,6 @@
+use crate::cpu::instructions::arithmetic::*;
+use crate::cpu::instructions::load::*;
+use crate::cpu::instructions::misc::*;
 use crate::cpu::regfile::*;
 use crate::mem::mem::Memory;
 
@@ -78,17 +81,76 @@ impl OpTable{
         }
     }
 
+    fn prefix_op(&mut self, _regfile: &mut Regfile, _memory: &mut Memory) {
+        self.is_prefixed_mode = true;
+    }
+
     //Initializes the normal operation table
     fn initialize_table() -> Vec<OpEntry> {
-        vec![OpEntry::default(); OP_TABLE_SIZE]
+        let mut table = vec![OpEntry::default(); OP_TABLE_SIZE];
+
+        table[0x00] = OpEntry { 
+            mnemonic: "NOP",
+            instruction_length: 1, 
+            exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 { op_nop() } 
+        };
+
+        table[0x01] = OpEntry { 
+            mnemonic: "LD BC, u16", 
+            instruction_length: 3, 
+            exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 { 
+                let source: u16 = memory.read_mem_16(regfile.read_pc() + 1);
+                let destination = DmgDoubleRegisters::BC;
+                op_load_r16_n16(regfile, destination, source)
+            } 
+        };
+
+        table[0x02] = OpEntry { 
+            mnemonic: "LD (BC), A", 
+            instruction_length: 1, 
+            exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
+                op_load_r16_acc(regfile, DmgDoubleRegisters::BC)
+            }
+        };
+
+        table[0x03] = OpEntry { 
+            mnemonic: "INC BC",
+            instruction_length: 1,
+            exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
+                op_inc_r16(regfile, DmgDoubleRegisters::BC)
+            }
+        };
+
+        table[0x04] = OpEntry { 
+            mnemonic: "INC B",
+            instruction_length: 1,
+            exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
+                op_inc_r8(regfile, DmgSimpleRegisters::B)
+            }
+        };
+
+        table[0x05] = OpEntry { 
+            mnemonic: "DEC B",
+            instruction_length: 1,
+            exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
+                op_dec_r8(regfile, DmgSimpleRegisters::B)
+            }
+        };
+
+        table[0x06] = OpEntry { 
+            mnemonic: "LD B, u8",
+            instruction_length: 2,
+            exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
+                let value: u8 = memory.read_mem_8(regfile.read_pc() + 1);
+                op_load_r8_n8(regfile, DmgSimpleRegisters::B, value)
+            }
+        };
+
+        table
     }
 
     //Initializes the alt operation table (prefixed)
     fn initialize_alt_table() -> Vec<OpEntry> {
         vec![OpEntry::default(); OP_TABLE_SIZE]
-    }
-
-    fn prefix_op(&mut self, _regfile: &mut Regfile, _memory: &mut Memory) {
-        self.is_prefixed_mode = true;
     }
 }

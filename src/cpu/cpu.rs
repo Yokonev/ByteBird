@@ -30,7 +30,7 @@ impl Cpu {
 
     }
 
-    //Fetches, decodes and executes the next instruction, then return the cycles used in said instruction
+    //Fetches, decodes and executes the next instruction, then return the cycles used in said instruction (always T-cycles)
     pub fn step(&mut self) -> u8 {
         let current_pc: u16 = self.regfile.read_pc();
 

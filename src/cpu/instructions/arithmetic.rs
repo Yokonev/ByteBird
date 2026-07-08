@@ -59,8 +59,8 @@ pub fn op_cp_acc_u8(reg_file: &mut Regfile, source:u8) -> () {
 // ===== DEC =====
 
 //DEC r8
-pub fn op_dec_r8(reg_file: &mut Regfile, destination:DmgSimpleRegisters) -> () {
-    //TODO
+pub fn op_dec_r8(reg_file: &mut Regfile, destination:DmgSimpleRegisters) -> u8 {
+    4u8
 }
 
 //DEC [HL]
@@ -76,8 +76,8 @@ pub fn op_dec_r16(reg_file: &mut Regfile, destination:DmgDoubleRegisters) -> () 
 // ===== INC =====
 
 //INC r8
-pub fn op_inc_r8(reg_file: &mut Regfile, destination:DmgSimpleRegisters) -> () {
-    //TODO
+pub fn op_inc_r8(reg_file: &mut Regfile, destination:DmgSimpleRegisters) -> u8 {
+    4u8
 }
 
 //INC [HL]
@@ -86,8 +86,8 @@ pub fn op_inc_hl(reg_file: &mut Regfile) -> () {
 }
 
 //INC r16
-pub fn op_inc_r16(reg_file: &mut Regfile, destination:DmgDoubleRegisters) -> () {
-    
+pub fn op_inc_r16(reg_file: &mut Regfile, destination:DmgDoubleRegisters) -> u8 {
+    8u8
 }
 
 // ===== SUBTRACT WITH CARRY =====

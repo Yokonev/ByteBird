@@ -6,8 +6,8 @@ pub fn op_daa(reg_file: &mut Regfile) -> () {
 }
 
 //NOP
-pub fn op_nop() -> () {
-    //TODO
+pub fn op_nop() -> u8 {
+    4u8
 }
 
 //STOP
