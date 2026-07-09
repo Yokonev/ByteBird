@@ -5,31 +5,37 @@ use crate::cpu::regfile::{self, *};
 //in each function.
 
 //BIT u3, r8
-pub fn op_bit_u3_r8(reg_file: &mut Regfile, bit: u8, source: DmgSimpleRegisters) -> () {
+pub fn op_bit_u3_r8(reg_file: &mut Regfile, bit: u8, source: DmgSimpleRegisters) -> u8 {
     //TODO
+    8u8
 }
 
 //BIT u3, [HL]
-pub fn op_bit_u3_hl(reg_file: &mut Regfile, bit: u8) -> () {
+pub fn op_bit_u3_hl(reg_file: &mut Regfile, bit: u8) -> u8 {
     //TODO
+    12u8
 }
 
 //RES u3, r8
-pub fn op_res_u3_r8(reg_file: &mut Regfile, bit: u8, source: DmgSimpleRegisters) -> () {
+pub fn op_res_u3_r8(reg_file: &mut Regfile, bit: u8, source: DmgSimpleRegisters) -> u8 {
     //TODO
+    8u8
 }
 
 //RES u3, [HL]
-pub fn op_res_u3_hl(reg_file: &mut Regfile, bit: u8) -> () {
+pub fn op_res_u3_hl(reg_file: &mut Regfile, bit: u8) -> u8 {
     //TODO
+    16u8
 }
 
 //SET u3, r8
-pub fn op_set_u3_r8(reg_file: &mut Regfile, bit: u8, source: DmgSimpleRegisters) -> () {
+pub fn op_set_u3_r8(reg_file: &mut Regfile, bit: u8, source: DmgSimpleRegisters) -> u8 {
     //TODO
+    8u8
 }
 
 //SET u3, [HL]
-pub fn op_set_u3_hl(reg_file: &mut Regfile, bit: u8) -> () {
+pub fn op_set_u3_hl(reg_file: &mut Regfile, bit: u8) -> u8 {
     //TODO
+    16u8
 }

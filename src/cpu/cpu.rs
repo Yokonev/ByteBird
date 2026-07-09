@@ -34,10 +34,18 @@ impl Cpu {
     pub fn step(&mut self) -> u8 {
         let current_pc: u16 = self.regfile.read_pc();
 
-        let next_op_code: u8 = self.memory.read_mem(current_pc); //FETCH
-        let instruction: OpEntry = self.decoder.decode(next_op_code); //DECODE
+        let next_op_code: u8 = self.memory.read_mem_8(current_pc); //FETCH
+
+        //0xCB switches to the CB-prefixed opcode table for the following byte instead of being a regular opcode
+        if next_op_code == 0xCB {
+            let cb_op_code: u8 = self.memory.read_mem_8(current_pc + 1); //FETCH
+            let instruction: &OpEntry = self.decoder.decode_cb(cb_op_code); //DECODE
+            return (instruction.get_instruction())(&mut self.regfile, &mut self.memory); //EXECUTE
+        }
+
+        let instruction: &OpEntry = self.decoder.decode(next_op_code); //DECODE
         let cycles_elapsed = (instruction.get_instruction())(&mut self.regfile, &mut self.memory); //EXECUTE
-        
+
         cycles_elapsed
     }
 
