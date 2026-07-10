@@ -55,19 +55,19 @@ pub fn op_pop_af(reg_file: &mut Regfile) -> u8 {
 }
 
 //POP r16
-pub fn pop_r16(reg_file: &mut Regfile, source: DmgDoubleRegisters) -> u8 {
+pub fn op_pop_r16(reg_file: &mut Regfile, source: DmgDoubleRegisters) -> u8 {
     //TODO
     12u8
 }
 
 //PUSH AF
-pub fn push_af(reg_file: &mut Regfile) -> u8 {
+pub fn op_push_af(reg_file: &mut Regfile) -> u8 {
     //TODO
     16u8
 }
 
 //PUSH r16
-pub fn push_r16(reg_file: &mut Regfile, source: DmgDoubleRegisters) -> u8 {
+pub fn op_push_r16(reg_file: &mut Regfile, source: DmgDoubleRegisters) -> u8 {
     //TODO
     16u8
 }
