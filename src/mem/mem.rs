@@ -48,8 +48,8 @@ impl Memory {
     }
 
     pub fn write_mem_16(& mut self, addr: u16, data: u16) -> () {
-        self.memory[addr as usize] = (data >> 8) as u8;
-        self.memory[(addr + 1) as usize] = (data & 0x00FF) as u8;
+        self.memory[(addr + 1) as usize] = (data >> 8) as u8;
+        self.memory[addr as usize] = (data & 0x00FF) as u8;
     }
 
     pub fn read_mem_8(&self, addr: u16) -> u8 {
@@ -57,6 +57,6 @@ impl Memory {
     }
 
     pub fn read_mem_16(&self, addr: u16) -> u16 {
-        ((self.memory[addr as usize] as u16) << 8) | (self.memory[addr as usize + 1] as u16)
+        ((self.memory[(addr + 1) as usize] as u16) << 8) | (self.memory[addr as usize] as u16)
     }
 }
