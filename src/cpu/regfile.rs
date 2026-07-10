@@ -21,10 +21,10 @@ pub enum DmgDoubleRegisters{
 
 #[derive(Clone, Copy)]
 pub enum DmgFlags{
-    ZERO = 4,
-    SUBTRACT = 3,
-    HCARRY = 2,
-    CARRY = 1
+    Zero = 4,
+    Subtract = 3,
+    HCarry = 2,
+    Carry = 1
 }
 
 pub struct Regfile{
@@ -131,15 +131,15 @@ mod tests {
         let expected_one: u8 = 0b1111_0000;
         let expected_two: u8 = 0b1001_0000;
 
-        reg_file.write_flag(DmgFlags::ZERO, true);
-        reg_file.write_flag(DmgFlags::SUBTRACT, true);
-        reg_file.write_flag(DmgFlags::HCARRY, true);
-        reg_file.write_flag(DmgFlags::CARRY, true);
+        reg_file.write_flag(DmgFlags::Zero, true);
+        reg_file.write_flag(DmgFlags::Subtract, true);
+        reg_file.write_flag(DmgFlags::HCarry, true);
+        reg_file.write_flag(DmgFlags::Carry, true);
         
         assert_eq!(expected_one, reg_file.read_register(DmgSimpleRegisters::F));
 
-        reg_file.write_flag(DmgFlags::SUBTRACT, false);
-        reg_file.write_flag(DmgFlags::HCARRY, false);
+        reg_file.write_flag(DmgFlags::Subtract, false);
+        reg_file.write_flag(DmgFlags::HCarry, false);
 
         assert_eq!(expected_two, reg_file.read_register(DmgSimpleRegisters::F));
     }
