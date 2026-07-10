@@ -406,7 +406,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SWAP B",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_swap(regfile, DmgSimpleRegisters::B)
+            op_swap_r8(regfile, DmgSimpleRegisters::B)
         }
     };
 
@@ -414,7 +414,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SWAP C",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_swap(regfile, DmgSimpleRegisters::C)
+            op_swap_r8(regfile, DmgSimpleRegisters::C)
         }
     };
 
@@ -422,7 +422,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SWAP D",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_swap(regfile, DmgSimpleRegisters::D)
+            op_swap_r8(regfile, DmgSimpleRegisters::D)
         }
     };
 
@@ -430,7 +430,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SWAP E",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_swap(regfile, DmgSimpleRegisters::E)
+            op_swap_r8(regfile, DmgSimpleRegisters::E)
         }
     };
 
@@ -438,7 +438,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SWAP H",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_swap(regfile, DmgSimpleRegisters::H)
+            op_swap_r8(regfile, DmgSimpleRegisters::H)
         }
     };
 
@@ -446,7 +446,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SWAP L",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_swap(regfile, DmgSimpleRegisters::L)
+            op_swap_r8(regfile, DmgSimpleRegisters::L)
         }
     };
 
@@ -462,7 +462,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SWAP A",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_swap(regfile, DmgSimpleRegisters::A)
+            op_swap_r8(regfile, DmgSimpleRegisters::A)
         }
     };
 

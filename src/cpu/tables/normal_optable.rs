@@ -2030,7 +2030,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
             let value: u8 = memory.read_mem_8(regfile.read_pc() + 1);
-            op_cp_acc_u8(regfile, value)
+            op_cp_acc_n8(regfile, value)
         }
     };
 
