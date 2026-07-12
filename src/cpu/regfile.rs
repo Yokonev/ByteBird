@@ -82,6 +82,13 @@ impl Regfile {
         };
     }
 
+    pub fn write_flags(& mut self, zero: bool, subtract: bool, hcarry: bool, carry: bool){
+        self.write_flag(DmgFlags::Zero, zero);
+        self.write_flag(DmgFlags::Subtract, subtract);
+        self.write_flag(DmgFlags::HCarry, hcarry);
+        self.write_flag(DmgFlags::Carry, carry);
+    }
+
     pub fn read_sp(& self) -> u16 {
         self.sp
     }
