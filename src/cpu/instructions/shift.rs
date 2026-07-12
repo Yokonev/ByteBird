@@ -109,7 +109,7 @@ pub fn op_srl_hl(reg_file: &mut Regfile) -> u8 {
 }
 
 //SWAP r8
-pub fn op_swap(reg_file: &mut Regfile, source: DmgSimpleRegisters) -> u8 {
+pub fn op_swap_r8(reg_file: &mut Regfile, source: DmgSimpleRegisters) -> u8 {
     //TODO
     8u8
 }

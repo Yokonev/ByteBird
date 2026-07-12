@@ -38,7 +38,7 @@ impl Cpu {
 
         //0xCB switches to the CB-prefixed opcode table for the following byte instead of being a regular opcode
         if next_op_code == 0xCB {
-            let cb_op_code: u8 = self.memory.read_mem_8(current_pc + 1); //FETCH
+            let cb_op_code: u8 = self.memory.read_mem_8(current_pc.wrapping_add(1)); //FETCH
             let instruction: &OpEntry = self.decoder.decode_cb(cb_op_code); //DECODE
             return (instruction.get_instruction())(&mut self.regfile, &mut self.memory); //EXECUTE
         }

@@ -61,7 +61,7 @@ pub fn op_cp_acc_hl(reg_file: &mut Regfile) -> u8 {
 }
 
 //CP A, n8
-pub fn op_cp_acc_u8(reg_file: &mut Regfile, source:u8) -> u8 {
+pub fn op_cp_acc_n8(reg_file: &mut Regfile, source:u8) -> u8 {
     //TODO
     8u8
 }
