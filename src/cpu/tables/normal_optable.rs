@@ -461,7 +461,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "INC (HL)",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_inc_hl(regfile)
+            op_inc_hl(regfile, memory)
         }
     };
 
@@ -469,7 +469,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "DEC (HL)",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_dec_hl(regfile)
+            op_dec_hl(regfile, memory)
         }
     };
 
@@ -1122,7 +1122,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "ADD A, (HL)",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_add_acc_hl(regfile)
+            op_add_acc_hl(regfile, memory)
         }
     };
 
@@ -1186,7 +1186,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "ADC A, (HL)",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_adc_acc_hl(regfile)
+            op_adc_acc_hl(regfile, memory)
         }
     };
 
@@ -1250,7 +1250,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "SUB A, (HL)",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_sub_acc_hl(regfile)
+            op_sub_acc_hl(regfile, memory)
         }
     };
 
@@ -1314,7 +1314,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "SBC A, (HL)",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_sbc_acc_hl(regfile)
+            op_sbc_acc_hl(regfile, memory)
         }
     };
 
@@ -1570,7 +1570,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "CP A, (HL)",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_cp_acc_hl(regfile)
+            op_cp_acc_hl(regfile, memory)
         }
     };
 
