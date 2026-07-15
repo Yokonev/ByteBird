@@ -1,5 +1,7 @@
 // Representation of registers for the original Gameboy (DMG) model
 
+use crate::mem::mem::Memory;
+
 const REG_COUNT: usize = 8;
 const FLAG_REG_STRIDE: usize = 3; //bits 0..3 are ignored for flags
 
@@ -105,6 +107,21 @@ impl Regfile {
         self.pc = value;
     }
 
+    //Reads the byte at PC and advances PC by one (fetch-and-advance). After the
+    //opcode + all operands are fetched, PC points at the next instruction.
+    pub fn fetch_byte(& mut self, mem: &Memory) -> u8 {
+        let byte: u8 = mem.read_mem_8(self.pc);
+        self.pc = self.pc.wrapping_add(1);
+        byte
+    }
+
+    //Reads a little-endian u16 operand at PC (low byte first) and advances PC by two.
+    pub fn fetch_word(& mut self, mem: &Memory) -> u16 {
+        let lower: u16 = self.fetch_byte(mem) as u16;
+        let upper: u16 = self.fetch_byte(mem) as u16;
+        (upper << 8) | lower
+    }
+
 }
 
 #[cfg(test)]
@@ -130,6 +147,46 @@ mod tests {
 
         let result = reg_file.read_double_register(target);
         assert_eq!(result, value)
+    }
+
+    //Verifies fetch_byte returns the byte at PC and advances PC by one each call
+    #[test]
+    fn test_fetch_byte_advances_pc() {
+        let mut mem: Memory = Memory::new();
+        mem.write_mem_8(0xC000, 0x12);
+        mem.write_mem_8(0xC001, 0x34);
+        let mut reg_file: Regfile = Regfile::new();
+        reg_file.write_pc(0xC000);
+
+        assert_eq!(0x12, reg_file.fetch_byte(&mem));
+        assert_eq!(0xC001, reg_file.read_pc());
+        assert_eq!(0x34, reg_file.fetch_byte(&mem));
+        assert_eq!(0xC002, reg_file.read_pc());
+    }
+
+    //Verifies fetch_word reads a little-endian u16 (low byte first) and advances PC by two
+    #[test]
+    fn test_fetch_word_little_endian() {
+        let mut mem: Memory = Memory::new();
+        mem.write_mem_8(0xC000, 0xCD); //low byte
+        mem.write_mem_8(0xC001, 0xAB); //high byte
+        let mut reg_file: Regfile = Regfile::new();
+        reg_file.write_pc(0xC000);
+
+        assert_eq!(0xABCD, reg_file.fetch_word(&mem));
+        assert_eq!(0xC002, reg_file.read_pc());
+    }
+
+    //Verifies PC wraps rather than panicking when fetching at the top of the address space
+    #[test]
+    fn test_fetch_byte_wraps_at_boundary() {
+        let mut mem: Memory = Memory::new();
+        mem.write_mem_8(0xFFFF, 0x99);
+        let mut reg_file: Regfile = Regfile::new();
+        reg_file.write_pc(0xFFFF);
+
+        assert_eq!(0x99, reg_file.fetch_byte(&mem));
+        assert_eq!(0x0000, reg_file.read_pc());
     }
 
     #[test]

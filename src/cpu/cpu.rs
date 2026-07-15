@@ -29,13 +29,14 @@ impl Cpu {
 
     //Fetches, decodes and executes the next instruction, then return the cycles used in said instruction (always T-cycles)
     pub fn step(&mut self, mem: &mut Memory) -> u8 {
-        let current_pc: u16 = self.regfile.read_pc();
-
-        let next_op_code: u8 = mem.read_mem_8(current_pc); //FETCH
+        //FETCH: read the opcode at PC and advance PC past it. Each instruction's
+        //closure then fetches its own operands (also advancing PC), so once EXECUTE
+        //returns PC already points at the next instruction. Jumps overwrite PC outright.
+        let next_op_code: u8 = self.regfile.fetch_byte(mem); //FETCH
 
         //0xCB switches to the CB-prefixed opcode table for the following byte instead of being a regular opcode
         if next_op_code == 0xCB {
-            let cb_op_code: u8 = mem.read_mem_8(current_pc.wrapping_add(1)); //FETCH
+            let cb_op_code: u8 = self.regfile.fetch_byte(mem); //FETCH
             let instruction: &OpEntry = self.decoder.decode_cb(cb_op_code); //DECODE
             return (instruction.get_instruction())(&mut self.regfile, mem); //EXECUTE
         }

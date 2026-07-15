@@ -30,7 +30,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD BC, u16",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let source: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let source: u16 = regfile.fetch_word(memory);
             let destination = DmgDoubleRegisters::BC;
             op_load_r16_n16(regfile, destination, source)
         }
@@ -72,7 +72,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD B, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_load_r8_n8(regfile, DmgSimpleRegisters::B, value)
         }
     };
@@ -89,7 +89,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD (n16), SP",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let destination: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let destination: u16 = regfile.fetch_word(memory);
             op_load_n16_sp(regfile, destination)
         }
     };
@@ -138,7 +138,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD C, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_load_r8_n8(regfile, DmgSimpleRegisters::C, value)
         }
     };
@@ -163,7 +163,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD DE, u16",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let source: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let source: u16 = regfile.fetch_word(memory);
             op_load_r16_n16(regfile, DmgDoubleRegisters::DE, source)
         }
     };
@@ -204,7 +204,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD D, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_load_r8_n8(regfile, DmgSimpleRegisters::D, value)
         }
     };
@@ -221,7 +221,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "JR e8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let offset: i8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1)) as i8;
+            let offset: i8 = regfile.fetch_byte(memory) as i8;
             let target: u16 = (regfile.read_pc() as i16).wrapping_add(2).wrapping_add(offset as i16) as u16;
             op_jr_n16(regfile, target)
         }
@@ -271,7 +271,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD E, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_load_r8_n8(regfile, DmgSimpleRegisters::E, value)
         }
     };
@@ -288,7 +288,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "JR NZ, e8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let offset: i8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1)) as i8;
+            let offset: i8 = regfile.fetch_byte(memory) as i8;
             let target: u16 = (regfile.read_pc() as i16).wrapping_add(2).wrapping_add(offset as i16) as u16;
             op_jr_cc_n16(regfile, target);
             8u8 //placeholder: real cycles are 8t (not taken) / 12t (taken) once op_jr_cc_n16 implements the flag check
@@ -299,7 +299,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD HL, u16",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let source: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let source: u16 = regfile.fetch_word(memory);
             op_load_r16_n16(regfile, DmgDoubleRegisters::HL, source)
         }
     };
@@ -340,7 +340,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD H, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_load_r8_n8(regfile, DmgSimpleRegisters::H, value)
         }
     };
@@ -357,7 +357,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "JR Z, e8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let offset: i8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1)) as i8;
+            let offset: i8 = regfile.fetch_byte(memory) as i8;
             let target: u16 = (regfile.read_pc() as i16).wrapping_add(2).wrapping_add(offset as i16) as u16;
             op_jr_cc_n16(regfile, target);
             8u8 //placeholder: real cycles are 8t (not taken) / 12t (taken) once op_jr_cc_n16 implements the flag check
@@ -408,7 +408,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD L, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_load_r8_n8(regfile, DmgSimpleRegisters::L, value)
         }
     };
@@ -425,7 +425,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "JR NC, e8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let offset: i8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1)) as i8;
+            let offset: i8 = regfile.fetch_byte(memory) as i8;
             let target: u16 = (regfile.read_pc() as i16).wrapping_add(2).wrapping_add(offset as i16) as u16;
             op_jr_cc_n16(regfile, target);
             8u8 //placeholder: real cycles are 8t (not taken) / 12t (taken) once op_jr_cc_n16 implements the flag check
@@ -436,7 +436,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD SP, u16",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let source: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let source: u16 = regfile.fetch_word(memory);
             op_load_sp_n16(regfile, source)
         }
     };
@@ -477,7 +477,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD (HL), u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_load_hl_n8(regfile, memory, value)
         }
     };
@@ -494,7 +494,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "JR C, e8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let offset: i8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1)) as i8;
+            let offset: i8 = regfile.fetch_byte(memory) as i8;
             let target: u16 = (regfile.read_pc() as i16).wrapping_add(2).wrapping_add(offset as i16) as u16;
             op_jr_cc_n16(regfile, target);
             8u8 //placeholder: real cycles are 8t (not taken) / 12t (taken) once op_jr_cc_n16 implements the flag check
@@ -545,7 +545,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD A, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_load_r8_n8(regfile, DmgSimpleRegisters::A, value)
         }
     };
@@ -1603,7 +1603,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "JP NZ, u16",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let addr: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let addr: u16 = regfile.fetch_word(memory);
             op_jmp_cc_n16(regfile, addr);
             12u8 //placeholder: real cycles are 12t (not taken) / 16t (taken) once op_jmp_cc_n16 implements the flag check
         }
@@ -1613,7 +1613,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "JP u16",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let addr: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let addr: u16 = regfile.fetch_word(memory);
             op_jmp_n16(regfile, addr)
         }
     };
@@ -1622,7 +1622,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "CALL NZ, u16",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let addr: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let addr: u16 = regfile.fetch_word(memory);
             op_call_cc_n16(regfile, addr);
             12u8 //placeholder: real cycles are 12t (not taken) / 24t (taken) once op_call_cc_n16 implements the flag check
         }
@@ -1640,7 +1640,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "ADD A, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_add_acc_n8(regfile, value)
         }
     };
@@ -1674,7 +1674,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "JP Z, u16",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let addr: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let addr: u16 = regfile.fetch_word(memory);
             op_jmp_cc_n16(regfile, addr);
             12u8 //placeholder: real cycles are 12t (not taken) / 16t (taken) once op_jmp_cc_n16 implements the flag check
         }
@@ -1692,7 +1692,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "CALL Z, u16",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let addr: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let addr: u16 = regfile.fetch_word(memory);
             op_call_cc_n16(regfile, addr);
             12u8 //placeholder: real cycles are 12t (not taken) / 24t (taken) once op_call_cc_n16 implements the flag check
         }
@@ -1702,7 +1702,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "CALL u16",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let addr: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let addr: u16 = regfile.fetch_word(memory);
             op_call_n16(regfile, addr)
         }
     };
@@ -1711,7 +1711,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "ADC A, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_adc_acc_n8(regfile, value)
         }
     };
@@ -1745,7 +1745,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "JP NC, u16",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let addr: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let addr: u16 = regfile.fetch_word(memory);
             op_jmp_cc_n16(regfile, addr);
             12u8 //placeholder: real cycles are 12t (not taken) / 16t (taken) once op_jmp_cc_n16 implements the flag check
         }
@@ -1755,7 +1755,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "CALL NC, u16",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let addr: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let addr: u16 = regfile.fetch_word(memory);
             op_call_cc_n16(regfile, addr);
             12u8 //placeholder: real cycles are 12t (not taken) / 24t (taken) once op_call_cc_n16 implements the flag check
         }
@@ -1773,7 +1773,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "SUB A, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_sub_acc_n8(regfile, value)
         }
     };
@@ -1807,7 +1807,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "JP C, u16",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let addr: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let addr: u16 = regfile.fetch_word(memory);
             op_jmp_cc_n16(regfile, addr);
             12u8 //placeholder: real cycles are 12t (not taken) / 16t (taken) once op_jmp_cc_n16 implements the flag check
         }
@@ -1817,7 +1817,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "CALL C, u16",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let addr: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let addr: u16 = regfile.fetch_word(memory);
             op_call_cc_n16(regfile, addr);
             12u8 //placeholder: real cycles are 12t (not taken) / 24t (taken) once op_call_cc_n16 implements the flag check
         }
@@ -1827,7 +1827,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "SBC A, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_sbc_acc_n8(regfile, value)
         }
     };
@@ -1844,7 +1844,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LDH (n16), A",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let offset: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let offset: u8 = regfile.fetch_byte(memory);
             let destination: u16 = 0xFF00 + offset as u16;
             op_load_high_n16_acc(regfile, memory, destination)
         }
@@ -1878,7 +1878,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "AND A, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_and_acc_n8(regfile, value)
         }
     };
@@ -1895,7 +1895,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "ADD SP, e8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let offset: i8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1)) as i8;
+            let offset: i8 = regfile.fetch_byte(memory) as i8;
             op_add_sp_e8(regfile, offset)
         }
     };
@@ -1912,7 +1912,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD (n16), A",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let destination: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let destination: u16 = regfile.fetch_word(memory);
             op_load_n16_acc(regfile, memory, destination)
         }
     };
@@ -1921,7 +1921,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "XOR A, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_xor_acc_n8(regfile, value)
         }
     };
@@ -1938,7 +1938,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LDH A, (n16)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let offset: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let offset: u8 = regfile.fetch_byte(memory);
             let source: u16 = 0xFF00 + offset as u16;
             op_load_high_acc_n16(regfile, memory, source)
         }
@@ -1980,7 +1980,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "OR A, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_or_acc_n8(regfile, value)
         }
     };
@@ -1997,7 +1997,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD HL, SP+e8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let offset: i8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1)) as i8;
+            let offset: i8 = regfile.fetch_byte(memory) as i8;
             op_load_hl_spe(regfile, offset)
         }
     };
@@ -2014,7 +2014,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "LD A, (n16)",
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let source: u16 = memory.read_mem_16(regfile.read_pc().wrapping_add(1));
+            let source: u16 = regfile.fetch_word(memory);
             op_load_acc_n16(regfile, memory, source)
         }
     };
@@ -2031,7 +2031,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "CP A, u8",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            let value: u8 = memory.read_mem_8(regfile.read_pc().wrapping_add(1));
+            let value: u8 = regfile.fetch_byte(memory);
             op_cp_acc_n8(regfile, value)
         }
     };
