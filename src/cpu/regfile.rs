@@ -32,7 +32,10 @@ pub enum DmgFlags{
 pub struct Regfile{
     registers: Vec<u8>,
     sp: u16,
-    pc: u16
+    pc: u16,
+    ime: bool,
+    //Set by EI, consumed by Cpu::step() one instruction later. See write_ime_pending.
+    ime_pending: bool
 }
 
 impl Regfile {
@@ -41,7 +44,9 @@ impl Regfile {
         Regfile { 
             registers: vec![0u8; REG_COUNT],
             sp: 0x0000,
-            pc: 0x0000
+            pc: 0x0000,
+            ime: false,
+            ime_pending: false
          }
     }
 
@@ -105,6 +110,26 @@ impl Regfile {
 
     pub fn write_pc(& mut self, value: u16) -> () {
         self.pc = value;
+    }
+
+    pub fn read_ime(& self) -> bool {
+        self.ime
+    }
+
+    pub fn write_ime(& mut self, value: bool) -> () {
+        self.ime = value;
+    }
+
+    pub fn read_ime_pending(& self) -> bool {
+        self.ime_pending
+    }
+
+    //EI sets this instead of IME directly: IME must only come up *after* the instruction
+    //following EI, and an instruction closure can't see across instruction boundaries.
+    //Cpu::step() latches this before EXECUTE and applies it after. DI clears it, so an
+    //EI immediately followed by DI never enables interrupts.
+    pub fn write_ime_pending(& mut self, value: bool) -> () {
+        self.ime_pending = value;
     }
 
     //Reads the byte at PC and advances PC by one (fetch-and-advance). After the
