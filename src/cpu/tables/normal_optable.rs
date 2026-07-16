@@ -222,7 +222,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
             let offset: i8 = regfile.fetch_byte(memory) as i8;
-            let target: u16 = (regfile.read_pc() as i16).wrapping_add(2).wrapping_add(offset as i16) as u16;
+            let target: u16 = (regfile.read_pc() as i16).wrapping_add(offset as i16) as u16;
             op_jr_n16(regfile, target)
         }
     };
@@ -289,7 +289,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
             let offset: i8 = regfile.fetch_byte(memory) as i8;
-            let target: u16 = (regfile.read_pc() as i16).wrapping_add(2).wrapping_add(offset as i16) as u16;
+            let target: u16 = (regfile.read_pc() as i16).wrapping_add(offset as i16) as u16;
             op_jr_cc_n16(regfile, target);
             8u8 //placeholder: real cycles are 8t (not taken) / 12t (taken) once op_jr_cc_n16 implements the flag check
         }
@@ -358,7 +358,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
             let offset: i8 = regfile.fetch_byte(memory) as i8;
-            let target: u16 = (regfile.read_pc() as i16).wrapping_add(2).wrapping_add(offset as i16) as u16;
+            let target: u16 = (regfile.read_pc() as i16).wrapping_add(offset as i16) as u16;
             op_jr_cc_n16(regfile, target);
             8u8 //placeholder: real cycles are 8t (not taken) / 12t (taken) once op_jr_cc_n16 implements the flag check
         }
@@ -426,7 +426,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
             let offset: i8 = regfile.fetch_byte(memory) as i8;
-            let target: u16 = (regfile.read_pc() as i16).wrapping_add(2).wrapping_add(offset as i16) as u16;
+            let target: u16 = (regfile.read_pc() as i16).wrapping_add(offset as i16) as u16;
             op_jr_cc_n16(regfile, target);
             8u8 //placeholder: real cycles are 8t (not taken) / 12t (taken) once op_jr_cc_n16 implements the flag check
         }
@@ -495,7 +495,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
             let offset: i8 = regfile.fetch_byte(memory) as i8;
-            let target: u16 = (regfile.read_pc() as i16).wrapping_add(2).wrapping_add(offset as i16) as u16;
+            let target: u16 = (regfile.read_pc() as i16).wrapping_add(offset as i16) as u16;
             op_jr_cc_n16(regfile, target);
             8u8 //placeholder: real cycles are 8t (not taken) / 12t (taken) once op_jr_cc_n16 implements the flag check
         }
