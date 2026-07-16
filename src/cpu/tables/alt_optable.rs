@@ -582,7 +582,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "BIT 0, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_bit_u3_hl(regfile, 0u8)
+            op_bit_u3_hl(regfile, memory, 0u8)
         }
     };
 
@@ -646,7 +646,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "BIT 1, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_bit_u3_hl(regfile, 1u8)
+            op_bit_u3_hl(regfile,memory, 1u8)
         }
     };
 
@@ -710,7 +710,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "BIT 2, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_bit_u3_hl(regfile, 2u8)
+            op_bit_u3_hl(regfile,memory, 2u8)
         }
     };
 
@@ -774,7 +774,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "BIT 3, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_bit_u3_hl(regfile, 3u8)
+            op_bit_u3_hl(regfile,memory, 3u8)
         }
     };
 
@@ -838,7 +838,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "BIT 4, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_bit_u3_hl(regfile, 4u8)
+            op_bit_u3_hl(regfile,memory, 4u8)
         }
     };
 
@@ -902,7 +902,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "BIT 5, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_bit_u3_hl(regfile, 5u8)
+            op_bit_u3_hl(regfile,memory, 5u8)
         }
     };
 
@@ -966,7 +966,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "BIT 6, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_bit_u3_hl(regfile, 6u8)
+            op_bit_u3_hl(regfile,memory, 6u8)
         }
     };
 
@@ -1030,7 +1030,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "BIT 7, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_bit_u3_hl(regfile, 7u8)
+            op_bit_u3_hl(regfile,memory, 7u8)
         }
     };
 
@@ -1094,7 +1094,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "RES 0, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_res_u3_hl(regfile, 0u8)
+            op_res_u3_hl(regfile,memory, 0u8)
         }
     };
 
@@ -1158,7 +1158,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "RES 1, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_res_u3_hl(regfile, 1u8)
+            op_res_u3_hl(regfile,memory, 1u8)
         }
     };
 
@@ -1222,7 +1222,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "RES 2, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_res_u3_hl(regfile, 2u8)
+            op_res_u3_hl(regfile,memory, 2u8)
         }
     };
 
@@ -1286,7 +1286,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "RES 3, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_res_u3_hl(regfile, 3u8)
+            op_res_u3_hl(regfile,memory, 3u8)
         }
     };
 
@@ -1350,7 +1350,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "RES 4, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_res_u3_hl(regfile, 4u8)
+            op_res_u3_hl(regfile,memory, 4u8)
         }
     };
 
@@ -1414,7 +1414,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "RES 5, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_res_u3_hl(regfile, 5u8)
+            op_res_u3_hl(regfile,memory, 5u8)
         }
     };
 
@@ -1478,7 +1478,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "RES 6, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_res_u3_hl(regfile, 6u8)
+            op_res_u3_hl(regfile,memory, 6u8)
         }
     };
 
@@ -1542,7 +1542,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "RES 7, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_res_u3_hl(regfile, 7u8)
+            op_res_u3_hl(regfile,memory, 7u8)
         }
     };
 
@@ -1606,7 +1606,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SET 0, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_set_u3_hl(regfile, 0u8)
+            op_set_u3_hl(regfile,memory, 0u8)
         }
     };
 
@@ -1670,7 +1670,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SET 1, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_set_u3_hl(regfile, 1u8)
+            op_set_u3_hl(regfile,memory, 1u8)
         }
     };
 
@@ -1734,7 +1734,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SET 2, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_set_u3_hl(regfile, 2u8)
+            op_set_u3_hl(regfile,memory, 2u8)
         }
     };
 
@@ -1798,7 +1798,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SET 3, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_set_u3_hl(regfile, 3u8)
+            op_set_u3_hl(regfile,memory, 3u8)
         }
     };
 
@@ -1862,7 +1862,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SET 4, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_set_u3_hl(regfile, 4u8)
+            op_set_u3_hl(regfile,memory, 4u8)
         }
     };
 
@@ -1926,7 +1926,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SET 5, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_set_u3_hl(regfile, 5u8)
+            op_set_u3_hl(regfile,memory, 5u8)
         }
     };
 
@@ -1990,7 +1990,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SET 6, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_set_u3_hl(regfile, 6u8)
+            op_set_u3_hl(regfile,memory, 6u8)
         }
     };
 
@@ -2054,7 +2054,7 @@ pub fn initialize_alt_table() -> Vec<OpEntry> {
         mnemonic: "SET 7, (HL)",
         instruction_length: 2,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_set_u3_hl(regfile, 7u8)
+            op_set_u3_hl(regfile,memory, 7u8)
         }
     };
 
