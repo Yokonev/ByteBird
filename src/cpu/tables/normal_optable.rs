@@ -90,7 +90,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         instruction_length: 3,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
             let destination: u16 = regfile.fetch_word(memory);
-            op_load_n16_sp(regfile, destination)
+            op_load_n16_sp(regfile, memory, destination)
         }
     };
 
@@ -1595,7 +1595,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "POP BC",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_pop_r16(regfile, DmgDoubleRegisters::BC)
+            op_pop_r16(regfile, memory, DmgDoubleRegisters::BC)
         }
     };
 
@@ -1632,7 +1632,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "PUSH BC",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_push_r16(regfile, DmgDoubleRegisters::BC)
+            op_push_r16(regfile, memory, DmgDoubleRegisters::BC)
         }
     };
 
@@ -1737,7 +1737,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "POP DE",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_pop_r16(regfile, DmgDoubleRegisters::DE)
+            op_pop_r16(regfile, memory, DmgDoubleRegisters::DE)
         }
     };
 
@@ -1765,7 +1765,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "PUSH DE",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_push_r16(regfile, DmgDoubleRegisters::DE)
+            op_push_r16(regfile, memory, DmgDoubleRegisters::DE)
         }
     };
 
@@ -1854,7 +1854,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "POP HL",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_pop_r16(regfile, DmgDoubleRegisters::HL)
+            op_pop_r16(regfile, memory, DmgDoubleRegisters::HL)
         }
     };
 
@@ -1870,7 +1870,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "PUSH HL",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_push_r16(regfile, DmgDoubleRegisters::HL)
+            op_push_r16(regfile, memory, DmgDoubleRegisters::HL)
         }
     };
 
@@ -1948,7 +1948,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "POP AF",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_pop_af(regfile)
+            op_pop_af(regfile, memory)
         }
     };
 
@@ -1972,7 +1972,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "PUSH AF",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_push_af(regfile)
+            op_push_af(regfile, memory)
         }
     };
 
