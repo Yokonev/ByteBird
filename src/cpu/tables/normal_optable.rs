@@ -10,6 +10,7 @@ use crate::cpu::instructions::carry::*;
 use crate::cpu::instructions::stack::*;
 use crate::cpu::instructions::interrupt::*;
 use crate::cpu::regfile::*;
+use crate::mem;
 use crate::mem::mem::Memory;
 
 const OP_TABLE_SIZE: usize = 0x100;
@@ -1378,7 +1379,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "AND A, (HL)",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_and_acc_hl(regfile)
+            op_and_acc_hl(regfile, memory)
         }
     };
 
@@ -1442,7 +1443,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "XOR A, (HL)",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_xor_acc_hl(regfile)
+            op_xor_acc_hl(regfile, memory)
         }
     };
 
@@ -1506,7 +1507,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "OR A, (HL)",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_or_acc_hl(regfile, DmgSimpleRegisters::A) //NOTE: op_or_acc_hl takes an unused source param that looks like a copy-paste leftover; passing a dummy value
+            op_or_acc_hl(regfile, memory, DmgSimpleRegisters::A) //NOTE: op_or_acc_hl takes an unused source param that looks like a copy-paste leftover; passing a dummy value
         }
     };
 
