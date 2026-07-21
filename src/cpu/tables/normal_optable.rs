@@ -156,7 +156,7 @@ pub fn initialize_table() -> Vec<OpEntry> {
         mnemonic: "STOP",
         instruction_length: 1,
         exec: |regfile: &mut Regfile, memory: &mut Memory| -> u8 {
-            op_stop(regfile)
+            op_stop(regfile, memory)
         }
     };
 

@@ -35,7 +35,10 @@ pub struct Regfile{
     pc: u16,
     ime: bool,
     //Set by EI, consumed by Cpu::step() one instruction later. See write_ime_pending.
-    ime_pending: bool
+    ime_pending: bool,
+    //Set by STOP, cleared by the main loop on a joypad line transition. Like `ime`, this
+    //isn't a real register — it lives here because exec closures only receive &mut Regfile.
+    stopped: bool
 }
 
 impl Regfile {
@@ -46,7 +49,8 @@ impl Regfile {
             sp: 0x0000,
             pc: 0x0000,
             ime: false,
-            ime_pending: false
+            ime_pending: false,
+            stopped: false
          }
     }
 
@@ -130,6 +134,16 @@ impl Regfile {
     //EI immediately followed by DI never enables interrupts.
     pub fn write_ime_pending(& mut self, value: bool) -> () {
         self.ime_pending = value;
+    }
+
+    pub fn read_stopped(& self) -> bool {
+        self.stopped
+    }
+
+    //Set true by STOP; the main loop clears it on a joypad line transition (DMG's only
+    //wakeup source). Nothing reads it yet — Cpu::step()/Emulator::run() aren't wired up.
+    pub fn write_stopped(& mut self, value: bool) -> () {
+        self.stopped = value;
     }
 
     //Reads the byte at PC and advances PC by one (fetch-and-advance). After the
